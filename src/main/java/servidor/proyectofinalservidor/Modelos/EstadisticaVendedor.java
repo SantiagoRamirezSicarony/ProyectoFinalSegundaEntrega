@@ -11,7 +11,7 @@ public class EstadisticaVendedor implements Serializable {
     private int productosVendidos;
     private int productosPublicados;
     private int mensajesEnviados;
-
+    public EstadisticaVendedor() {}
     
     public static long getSerialversionuid() {
         return serialVersionUID;

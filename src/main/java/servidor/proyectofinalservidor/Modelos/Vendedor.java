@@ -1,36 +1,229 @@
 package servidor.proyectofinalservidor.Modelos;
 
-import co.edu.uniquindio.poo.Excepciones.MaximoContactosException;
-import co.edu.uniquindio.poo.Excepciones.ProductoDuplicadoException;
-import co.edu.uniquindio.poo.Excepciones.ProductoNoDisponibleException;
-import co.edu.uniquindio.poo.Excepciones.VendedorNoEncontradoException;
 
+
+import servidor.proyectofinalservidor.Excepciones.MaximoContactosException;
+import servidor.proyectofinalservidor.Excepciones.ProductoDuplicadoException;
+import servidor.proyectofinalservidor.Excepciones.ProductoNoDisponibleException;
+import servidor.proyectofinalservidor.Excepciones.VendedorNoEncontradoException;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vendedor extends Persona {
+public class Vendedor extends Persona implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String contraseña;
+    private String contrasenia;
     private String direccion;
+    private String correo;
+    private ArrayList<Producto> productos;
+    private ArrayList<Vendedor> contactos;
+    private ArrayList<Vendedor> solicitudes;
+    private ArrayList<Producto> productosComprados;
+    private int reputacionVendedor;
+    private ArrayList<Reputacion> calificaciones;
 
-    private List<Producto> productos;
-    private List<Vendedor> contactos;
+    // Constructor vacío
+    public Vendedor() {
+        super();
+        this.productos = new ArrayList<>();
+        this.contactos = new ArrayList<>();
+        this.solicitudes = new ArrayList<>();
+        this.productosComprados = new ArrayList<>();
+        this.calificaciones = new ArrayList<>();
+    }
 
-    // Constructor con builder
-    private Vendedor(VendedorBuilder builder) {
-        super(builder.nombre, builder.cedula, builder.password);
-        this.apellido = builder.apellido;
-        this.direccion = builder.direccion;
-        this.productos = builder.productos;
-        this.contactos = builder.contactos;
+    // Constructor con parámetros
+    public Vendedor(String nombre, String apellido, String cedula, String contrasenia, String direccion,
+                    String correo, ArrayList<Producto> productos, ArrayList<Vendedor> contactos,
+                    ArrayList<Vendedor> solicitudes, ArrayList<Producto> productosComprados, int reputacionVendedor, ArrayList<Reputacion> calificaciones) {
+        super(nombre, cedula, apellido); // Llamar al constructor de Persona
+        this.contrasenia = contrasenia;
+        this.reputacionVendedor = reputacionVendedor;
+        this.direccion = direccion;
+        this.correo = correo;
+        this.productos = productos;
+        this.contactos = contactos;
+        this.solicitudes = solicitudes;
+        this.productosComprados = productosComprados;
+        this.calificaciones = calificaciones;
+    }
+
+
+
+    // Getters
+    public String getContrasenia() {
+        return contrasenia;
+    }
+    public ArrayList<Producto> getProductosComprados(){
+        return productosComprados;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
+
+    public ArrayList<Vendedor> getContactos() {
+        return contactos;
+    }
+    public ArrayList<Vendedor> getSolicitudes() {
+        return solicitudes;
+    }
+    public int getReputacionVendedor() {
+        return reputacionVendedor;
+    }
+
+    // Setters
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    public void setReputacionVendedor(int reputacionVendedor) {
+        this.reputacionVendedor = reputacionVendedor;
+    }
+
+    public void setProductosComprados(ArrayList<Producto> productosComprados) {
+        this.productosComprados = productosComprados;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setProductos(ArrayList<Producto> productos) {
+        this.productos = productos;
+    }
+
+    public void setContactos(ArrayList<Vendedor> contactos) {
+        this.contactos = contactos;
+    }
+    public void setSolicitudes(ArrayList<Vendedor> solicitudes) {
+        this.solicitudes = solicitudes;
+    }
+
+
+
+    // toString method
+    @Override
+    public String toString() {
+        return "Vendedor{" +
+                "nombre='" + getNombre() + '\'' +
+                ", apellido='" + getApellido() + '\'' +
+                ", cedula='" + getCedula() + '\'' +
+                ", contrasenia='" + contrasenia + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", correo='" + correo + '\'' +
+                ", productos=" + productos +  '\'' +
+                ", contactos=" + contactos +'\'' +
+                ", calificaciones=" + calificaciones +'\'' +
+                ", Solicitudes=" + solicitudes +
+                '}';
+    }
+
+    // Builder pattern
+    public static class Builder extends Persona.Builder {
+        private String contrasenia;
+        private String direccion;
+        private String correo;
+        private ArrayList<Producto> productos = new ArrayList<>();
+        private ArrayList<Vendedor> contactos = new ArrayList<>();
+        private ArrayList<Vendedor> solicitudes = new ArrayList<>();
+        private int reputacionVendedor;
+        private ArrayList<Producto> productosComprados = new ArrayList<>();
+        private ArrayList<Reputacion> calificaciones = new ArrayList<>();
+
+
+        public Builder() {
+            super();
+        }
+
+        // Métodos heredados de Persona para Nombre, Apellido y Cedula
+        @Override
+        public Builder setNombre(String nombre) {
+            super.setNombre(nombre);
+            return this;
+        }
+
+        @Override
+        public Builder setApellido(String apellido) {
+            super.setApellido(apellido);
+            return this;
+        }
+
+        @Override
+        public Builder setCedula(String cedula) {
+            super.setCedula(cedula);
+            return this;
+        }
+
+
+        // Métodos específicos de Vendedor
+        public Builder setContrasenia(String contrasenia) {
+            this.contrasenia = contrasenia;
+            return this;
+        }
+        public Builder setCalificaciones(ArrayList<Reputacion> calificaciones) {
+            this.calificaciones = calificaciones;
+            return this;
+        }
+        public Builder setProductosComprados(ArrayList<Producto> productosComprados) {
+            this.productosComprados = productosComprados;
+            return this;
+        }
+
+        public Builder setReputacionVendedor(int reputacionVendedor) {
+            this.reputacionVendedor = reputacionVendedor;
+            return this;
+        }
+
+        public Builder setDireccion(String direccion) {
+            this.direccion = direccion;
+            return this;
+        }
+        public Builder setSolicitudes(ArrayList<Vendedor> solicitudes) {
+            this.solicitudes = solicitudes;
+            return this;
+        }
+
+        public Builder setCorreo(String correo) {
+            this.correo = correo;
+            return this;
+        }
+
+        public Builder setProductos(ArrayList<Producto> productos) {
+            this.productos = productos;
+            return this;
+        }
+
+        public Builder setContactos(ArrayList<Vendedor> contactos) {
+            this.contactos = contactos;
+            return this;
+        }
+
+        // Método build para crear un Vendedor
+        public Vendedor build() {
+            return new Vendedor(nombre, apellido, cedula, contrasenia, direccion, correo, productos, contactos,solicitudes,productosComprados,reputacionVendedor, calificaciones);
+        }
     }
 
     // Excepcion 1
     public Producto buscarVendedorPorNombre(String nombre) throws VendedorNoEncontradoException {
-    
-        for (Producto producto : productos) {  
-            if (producto.getNombre().equals(nombre)) {  
+
+        for (Producto producto : productos) {
+            if (producto.getNombre().equals(nombre)) {
                 return producto;
             }
         }
@@ -66,70 +259,7 @@ public class Vendedor extends Persona {
         if (producto.getEstado() != EstadoProducto.PUBLICADO) {
             throw new ProductoNoDisponibleException("El producto " + producto.getNombre() + " no está disponible para la venta.");
         }
-        producto.vender();
+        //producto.vender();
         System.out.println("Producto vendido exitosamente.");
-    }
-
-        
-    // Builder
-    public static class VendedorBuilder {
-        private String nombre;
-        private String cedula;
-        private String password;
-        private String apellido;
-        private String direccion;
-        private List<Producto> productos = new ArrayList<>();
-        private List<Vendedor> contactos = new ArrayList<>();
-
-        public VendedorBuilder setNombre(String nombre) {
-            this.nombre = nombre;
-            return this;
-        }
-
-        public VendedorBuilder setCedula(String cedula) {
-            this.cedula = cedula;
-            return this;
-        }
-
-        public VendedorBuilder setPassword(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public VendedorBuilder setApellido(String apellido) {
-            this.apellido = apellido;
-            return this;
-        }
-
-        public VendedorBuilder setDireccion(String direccion) {
-            this.direccion = direccion;
-            return this;
-        }
-
-        public VendedorBuilder setProductos(List<Producto> productos) {
-            this.productos = productos;
-            return this;
-        }
-
-        public VendedorBuilder setContactos(List<Vendedor> contactos) {
-            this.contactos = contactos;
-            return this;
-        }
-
-        public Vendedor build() {
-            return new Vendedor(this);
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "Vendedor{" +
-                "nombre='" + getNombre() + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", cedula='" + getCedula() + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", productos=" + productos +
-                ", contactos=" + contactos +
-                '}';
     }
 }

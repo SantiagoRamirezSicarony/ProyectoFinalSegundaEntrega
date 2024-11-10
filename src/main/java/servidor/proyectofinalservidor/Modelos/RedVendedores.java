@@ -1,6 +1,7 @@
 package servidor.proyectofinalservidor.Modelos;
 
-import co.edu.uniquindio.poo.Excepciones.VendedorNoEncontradoException;
+
+import servidor.proyectofinalservidor.Excepciones.VendedorNoEncontradoException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,13 +9,15 @@ import java.util.List;
 
 public class RedVendedores implements Serializable {
     private static final long serialVersionUID = 1L;
-
     private ArrayList<Vendedor> vendedores;
-    private final int maxContactos = 10;
 
-    // Constructor con builder
-    private RedVendedores(RedVendedoresBuilder builder) {
-        this.vendedores = builder.vendedores;
+
+
+    private RedVendedores() {
+        this.vendedores = new ArrayList<>();
+    }
+    private RedVendedores(ArrayList<Vendedor> vendedores) {
+        this.vendedores = vendedores;
     }
 
     
@@ -23,17 +26,15 @@ public class RedVendedores implements Serializable {
         return serialVersionUID;
     }
 
-    public List<Vendedor> getVendedores() {
+    public ArrayList<Vendedor> getVendedores() {
         return vendedores;
     }
 
-    public void setVendedores(List<Vendedor> vendedores) {
+    public void setVendedores(ArrayList<Vendedor> vendedores) {
         this.vendedores = vendedores;
     }
 
-    public int getMaxContactos() {
-        return maxContactos;
-    }
+
 
     //Excepcion 7
 
@@ -50,24 +51,29 @@ public class RedVendedores implements Serializable {
 
 
     // Builder
-    public static class RedVendedoresBuilder {
-        private List<Vendedor> vendedores = new ArrayList<>();
+    public static class Builder {
+        private ArrayList<Vendedor> vendedores = new ArrayList<>();
 
-        public RedVendedoresBuilder setVendedores(List<Vendedor> vendedores) {
+        public Builder() {
+        }
+
+
+
+        // Método para añadir una lista de vendedores
+        public Builder setVendedores(ArrayList<Vendedor> vendedores) {
             this.vendedores = vendedores;
             return this;
         }
 
+        // Método build para crear un RedVendedores
         public RedVendedores build() {
-            return new RedVendedores(this);
+            return new RedVendedores(vendedores);
         }
     }
-
     @Override
     public String toString() {
         return "RedVendedores{" +
                 "vendedores=" + vendedores +
-                ", maxContactos=" + maxContactos +
                 '}';
     }
 }

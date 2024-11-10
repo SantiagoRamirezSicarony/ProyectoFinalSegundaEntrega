@@ -10,13 +10,14 @@ public class Comentario implements Serializable {
     private Date fecha;
     private Persona autor;
     private Producto producto;
-
+    public Comentario() {}
     // Constructor
     public Comentario(String mensaje, Date fecha, Persona autor, Producto producto) {
         this.mensaje = mensaje;
         this.fecha = fecha;
         this.autor = autor;
         this.producto = producto;
+
     }
 
     // Getters
@@ -93,6 +94,7 @@ public class Comentario implements Serializable {
             this.producto = producto;
             return this;
         }
+
 
         public Comentario build() {
             return new Comentario(mensaje, fecha, autor, producto);

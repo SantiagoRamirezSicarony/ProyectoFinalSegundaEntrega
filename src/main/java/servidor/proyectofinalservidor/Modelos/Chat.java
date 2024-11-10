@@ -12,7 +12,7 @@ public class Chat implements Serializable {
 
     private ArrayList<Mensaje> mensajes;
     private ArrayList<Persona> participantes;
-
+    public Chat() {}
     // Constructor con builder
     private Chat(ChatBuilder builder) {
         this.mensajes = builder.mensajes;

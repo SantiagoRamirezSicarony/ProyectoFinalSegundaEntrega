@@ -1,7 +1,12 @@
 package servidor.proyectofinalservidor.Modelos;
 
-import co.edu.uniquindio.poo.Excepciones.ProductoSinDescripcionException;
-import co.edu.uniquindio.poo.Excepciones.ProductoSinPrecioException;
+
+
+import servidor.proyectofinalservidor.Excepciones.ProductoSinDescripcionException;
+import servidor.proyectofinalservidor.Excepciones.ProductoSinPrecioException;
+
+import java.io.Serializable;
+import java.util.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,80 +24,33 @@ public class Producto implements Serializable {
     private EstadoProducto estado;
     private List<Comentario> comentarios;
     private List<MeGusta> meGustas;
+    private int cantidad;
+    private Date fechaPublicacion;
 
-    
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
+    // Constructor vacío
+    public Producto() {
+        this.comentarios = new ArrayList<>();
+        this.meGustas = new ArrayList<>();
     }
 
-    public void setNombre(String nombre) {
+    // Constructor con todos los atributos
+    public Producto(String nombre, String codigo, String imagen, String categoria, double precio,
+                    String descripcion, EstadoProducto estado, List<Comentario> comentarios,
+                    List<MeGusta> meGustas, int cantidad, Date fechaPublicacion) {
         this.nombre = nombre;
-    }
-
-    public void setCodigo(String codigo) {
         this.codigo = codigo;
-    }
-
-    public void setImagen(String imagen) {
         this.imagen = imagen;
-    }
-
-    public void setCategoria(String categoria) {
         this.categoria = categoria;
-    }
-
-    public void setPrecio(double precio) {
         this.precio = precio;
-    }
-
-    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public void setEstado(EstadoProducto estado) {
         this.estado = estado;
-    }
-
-    public void setComentarios(List<Comentario> comentarios) {
         this.comentarios = comentarios;
-    }
-
-    public void setMeGustas(List<MeGusta> meGustas) {
         this.meGustas = meGustas;
+        this.cantidad = cantidad;
+        this.fechaPublicacion = fechaPublicacion;
     }
 
-
-    //Excepcion 6
-    public void validarDescripcion() throws ProductoSinDescripcionException {
-        if (this.descripcion == null || this.descripcion.trim().isEmpty()) {
-            throw new ProductoSinDescripcionException("El producto debe tener una descripción.");
-        }
-    }
-
-    //Excepcion 10
-
-    public void verificarPrecio() throws ProductoSinPrecioException {
-        if (this.precio <= 0) {
-            throw new ProductoSinPrecioException("El producto " + this.nombre + " no tiene un precio válido.");
-        }
-    }
-    
-    
-
-    // Constructor con builder
-    private Producto(ProductoBuilder builder) {
-        this.nombre = builder.nombre;
-        this.codigo = builder.codigo;
-        this.imagen = builder.imagen;
-        this.categoria = builder.categoria;
-        this.precio = builder.precio;
-        this.descripcion = builder.descripcion;
-        this.estado = builder.estado;
-        this.comentarios = builder.comentarios;
-        this.meGustas = builder.meGustas;
-    }
-    
+    // Getters
     public String getNombre() {
         return nombre;
     }
@@ -129,69 +87,58 @@ public class Producto implements Serializable {
         return meGustas;
     }
 
-    // Builder
-    public static class ProductoBuilder {
-        private String nombre;
-        private String codigo;
-        private String imagen;
-        private String categoria;
-        private double precio;
-        private String descripcion;
-        private EstadoProducto estado;
-        private List<Comentario> comentarios = new ArrayList<>();
-        private List<MeGusta> meGustas = new ArrayList<>();
-
-        public ProductoBuilder setNombre(String nombre) {
-            this.nombre = nombre;
-            return this;
-        }
-
-        public ProductoBuilder setCodigo(String codigo) {
-            this.codigo = codigo;
-            return this;
-        }
-
-        public ProductoBuilder setImagen(String imagen) {
-            this.imagen = imagen;
-            return this;
-        }
-
-        public ProductoBuilder setCategoria(String categoria) {
-            this.categoria = categoria;
-            return this;
-        }
-
-        public ProductoBuilder setPrecio(double precio) {
-            this.precio = precio;
-            return this;
-        }
-
-        public ProductoBuilder setDescripcion(String descripcion) {
-            this.descripcion = descripcion;
-            return this;
-        }
-
-        public ProductoBuilder setEstado(EstadoProducto estado) {
-            this.estado = estado;
-            return this;
-        }
-
-
-        public ProductoBuilder setComentarios(List<Comentario> comentarios) {
-            this.comentarios = comentarios;
-            return this;
-        }
-
-        public ProductoBuilder setMeGustas(List<MeGusta> meGustas) {
-            this.meGustas = meGustas;
-            return this;
-        }
-
-        public Producto build() {
-            return new Producto(this);
-        }
+    public int getCantidad() {
+        return cantidad;
+    }
+    public Date getFechaPublicacion() {
+        return fechaPublicacion;
     }
 
+    // Setters
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setEstado(EstadoProducto estado) {
+        this.estado = estado;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public void setMeGustas(List<MeGusta> meGustas) {
+        this.meGustas = meGustas;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    public void setFechaPublicacion(Date fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
+    }
+
+    // Método toString
     @Override
     public String toString() {
         return "Producto{" +
@@ -204,12 +151,100 @@ public class Producto implements Serializable {
                 ", estado=" + estado +
                 ", comentarios=" + comentarios +
                 ", meGustas=" + meGustas +
+                ", cantidad=" + cantidad +
                 '}';
     }
 
-    public void vender() {
-        this.estado = EstadoProducto.VENDIDO;  // Cambia el estado a VENDIDO
+    // Builder Pattern
+    public static class Builder {
+        private String nombre;
+        private String codigo;
+        private String imagen;
+        private String categoria;
+        private double precio;
+        private String descripcion;
+        private EstadoProducto estado;
+        private List<Comentario> comentarios = new ArrayList<>();
+        private List<MeGusta> meGustas = new ArrayList<>();
+        private int cantidad;
+        private Date fechaPublicacion;
+
+        public Builder setFechaPublicacion(Date fechaPublicacion) {
+            this.fechaPublicacion = fechaPublicacion;
+            return this;
+        }
+
+        public Builder setNombre(String nombre) {
+            this.nombre = nombre;
+            return this;
+        }
+
+        public Builder setCodigo(String codigo) {
+            this.codigo = codigo;
+            return this;
+        }
+
+        public Builder setImagen(String imagen) {
+            this.imagen = imagen;
+            return this;
+        }
+
+        public Builder setCategoria(String categoria) {
+            this.categoria = categoria;
+            return this;
+        }
+
+        public Builder setPrecio(double precio) {
+            this.precio = precio;
+            return this;
+        }
+
+        public Builder setDescripcion(String descripcion) {
+            this.descripcion = descripcion;
+            return this;
+        }
+
+        public Builder setEstado(EstadoProducto estado) {
+            this.estado = estado;
+            return this;
+        }
+
+        public Builder setComentarios(List<Comentario> comentarios) {
+            this.comentarios = comentarios;
+            return this;
+        }
+
+        public Builder setMeGustas(List<MeGusta> meGustas) {
+            this.meGustas = meGustas;
+            return this;
+        }
+
+        public Builder setCantidad(int cantidad) {
+            this.cantidad = cantidad;
+            return this;
+        }
+
+        public Producto build() {
+            return new Producto(nombre, codigo, imagen, categoria, precio, descripcion, estado, comentarios, meGustas, cantidad, fechaPublicacion);
+        }
     }
+    //Excepcion 6
+    public void validarDescripcion() throws ProductoSinDescripcionException {
+        if (this.descripcion == null || this.descripcion.trim().isEmpty()) {
+            throw new ProductoSinDescripcionException("El producto debe tener una descripción.");
+        }
+    }
+
+    //Excepcion 10
+
+    public void verificarPrecio() throws ProductoSinPrecioException {
+        if (this.precio <= 0) {
+            throw new ProductoSinPrecioException("El producto " + this.nombre + " no tiene un precio válido.");
+        }
+    }
+
     
+
+
 
 }

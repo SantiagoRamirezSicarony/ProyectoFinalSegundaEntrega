@@ -7,7 +7,7 @@ public class EstadisticaProducto implements Serializable {
 
     private double calificacionProducto;
     private int meGustas;
-
+    public EstadisticaProducto() {}
     // Constructor con builder
     private EstadisticaProducto(EstadisticaProductoBuilder builder) {
         this.calificacionProducto = builder.calificacionProducto;

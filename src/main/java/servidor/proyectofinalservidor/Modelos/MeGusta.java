@@ -9,7 +9,7 @@ public class MeGusta implements Serializable {
     private Date fecha;
     private Vendedor autor;
     private Producto producto;
-
+    public MeGusta() {}
     // Constructor con builder
     private MeGusta(MeGustaBuilder builder) {
         this.fecha = builder.fecha;

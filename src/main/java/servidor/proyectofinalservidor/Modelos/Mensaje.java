@@ -11,7 +11,7 @@ public class Mensaje implements Serializable {
     private Date fecha;
     private Vendedor remitente;
     private Vendedor receptor;
-
+    public Mensaje() {}
     // Constructor con builder
     private Mensaje(MensajeBuilder builder) {
         this.contenidoTexto = builder.contenidoTexto;
@@ -118,3 +118,5 @@ public class Mensaje implements Serializable {
                 '}';
     }
 }
+
+
