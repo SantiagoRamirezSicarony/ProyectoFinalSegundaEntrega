@@ -11,10 +11,10 @@ public class MeGusta implements Serializable {
     private Producto producto;
     public MeGusta() {}
     // Constructor con builder
-    private MeGusta(MeGustaBuilder builder) {
-        this.fecha = builder.fecha;
-        this.autor = builder.autor;
-        this.producto = builder.producto;
+    public MeGusta(Date fecha, Vendedor autor, Producto producto) {
+        this.fecha = fecha;
+        this.autor = autor;
+        this.producto = producto;
     }
 
     // Builder
@@ -39,7 +39,7 @@ public class MeGusta implements Serializable {
         }
 
         public MeGusta build() {
-            return new MeGusta(this);
+            return new MeGusta(fecha, autor, producto);
         }
     }
 

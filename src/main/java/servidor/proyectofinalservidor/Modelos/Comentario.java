@@ -57,12 +57,8 @@ public class Comentario implements Serializable {
     // toString method
     @Override
     public String toString() {
-        return "Comentario{" +
-                "mensaje='" + mensaje + '\'' +
-                ", fecha=" + fecha +
-                ", autor=" + autor +
-                ", producto=" + producto +
-                '}';
+        return  fecha + "\n" + autor.getNombre() + " " + autor.getApellido() + ":\n" + mensaje;
+
     }
 
     // Builder pattern

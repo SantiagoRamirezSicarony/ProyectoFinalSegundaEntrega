@@ -1,21 +1,14 @@
 package servidor.proyectofinalservidor.Modelos;
 
-import servidor.proyectofinalservidor.Excepciones.ArgumentosFaltantesException;
-import servidor.proyectofinalservidor.Excepciones.ContactoEncontradoException;
-import servidor.proyectofinalservidor.Excepciones.MaximoContactosException;
-import servidor.proyectofinalservidor.Excepciones.ProductoFueraDeStock;
-import servidor.proyectofinalservidor.Servicios.EstadisticasService;
-import servidor.proyectofinalservidor.Servicios.ProductoService;
-import servidor.proyectofinalservidor.Servicios.ReputacionService;
-import servidor.proyectofinalservidor.Servicios.VendedorService;
+import servidor.proyectofinalservidor.Excepciones.*;
+import servidor.proyectofinalservidor.Servicios.*;
 import servidor.proyectofinalservidor.Utilidades.Persistencia;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class MarketPlace implements EstadisticasService, ProductoService, ReputacionService, VendedorService {
+public class MarketPlace implements EstadisticasService, ProductoService, ReputacionService, VendedorService, ComentarioService {
     private ArrayList<Administrador> listaAdministradoresSistema;
     private ArrayList<Vendedor> listaVendedoresSistema;
     private ArrayList<Producto> listaProductosSistemaVendidos;
@@ -199,20 +192,30 @@ public class MarketPlace implements EstadisticasService, ProductoService, Reputa
     }
 
     @Override
-    public void comentarProducto(String mensaje, Date fecha, Persona autor, Producto producto) {
-
-
+    public void comentarProducto(String mensaje, Date fecha, Persona autor, Producto producto) throws ArgumentosFaltantesException, ProductoNoDisponibleException {
+        if( producto != null) {
+            Comentario comentario = crearComentario(mensaje, fecha, autor, producto);
+            producto.getComentarios().add(comentario);
+        }else{
+            throw new ProductoNoDisponibleException("Producto no existente");
+        }
     }
 
     @Override
-    public void darMeGusta(Date fecha, Persona autor, Producto producto) {
-
+    public void darMeGusta(Date fecha, Vendedor autor, Producto producto) throws ArgumentosFaltantesException {
+        if( fecha != null && autor != null && producto != null){
+            MeGusta meGusta = new MeGusta(fecha,autor,producto);
+            producto.getMeGustas().add(meGusta);
+        }else{
+            throw new ArgumentosFaltantesException("Faltan argumentos para dar un me gusta");
+        }
     }
 
     @Override
-    public Vendedor buscarVendedor(String cedula) {
+    public ArrayList<Vendedor> buscarVendedor(String cedula, String nombre, String apellido)throws ArgumentosFaltantesException{
         return null;
     }
+
 
 
     public void crearPersona(String nombre, String cedula, String apellido)  {
@@ -248,8 +251,8 @@ public class MarketPlace implements EstadisticasService, ProductoService, Reputa
 
     }
     //falta
-    public void comprarProducto(Producto producto, int cantidad) throws Exception {
-
+    public void comprarProducto(String codigo, int cantidad) throws Exception {
+        Producto producto = buscarProducto(codigo);
         String identificador = producto.getCodigo();
 
         for(Vendedor vendedor: listaVendedoresSistema) {
@@ -276,6 +279,24 @@ public class MarketPlace implements EstadisticasService, ProductoService, Reputa
 
     }
 
+    private Producto buscarProducto(String codigo) throws ProductoNoDisponibleException {
+        if(codigo != null){
+            for(Vendedor vendedor: listaVendedoresSistema){
+                for(Producto p: vendedor.getProductos()){
+                    if(p.getCodigo().equals(codigo)){
+                        return p;
+                    }
+                }
+
+            }
+            throw new ProductoNoDisponibleException("No se ha encontrado el producto con ese codigo");
+        }else{
+            return null;
+        }
+
+
+    }
+
     public Persona buscarPersona(String identificador, String nombre, String apellido) {
 
         for(Persona persona: listaPersonaEnElSistema) {
@@ -286,6 +307,7 @@ public class MarketPlace implements EstadisticasService, ProductoService, Reputa
         return null;
     }
 
+    @Override
     public Producto crearProducto(String nombre, String codigo, String imagen, String categoria, double precio,
                                   String descripcion, int cantidad, Vendedor vendedor){
         if (nombre != null && !nombre.isEmpty() &&
@@ -335,23 +357,83 @@ public class MarketPlace implements EstadisticasService, ProductoService, Reputa
     }
 
 
+
     @Override
-    public Producto crearProducto(String nombre, String codigo, String imagen, String categoria, double precio, String descripcion, EstadoProducto estado, List<Comentario> comentarios, List<MeGusta> meGustas, int cantidad, Date fechaPublicacion) {
-        return null;
+    public boolean modificarProducto(String nombre, String imagen, String categoria, double precio, String descripcion, EstadoProducto estado, String  codigo, int cantidad) throws ProductoNoDisponibleException {
+
+        Producto producto = buscarProducto(codigo);
+
+        boolean modificado = false;
+
+        if (producto == null) {
+            throw new IllegalArgumentException("El producto no puede ser nulo.");
+        }
+
+        if (nombre != null && !producto.getNombre().equals(nombre)) {
+            producto.setNombre(nombre);
+            modificado = true;
+        }
+
+
+        if (imagen != null && !producto.getImagen().equals(imagen)) {
+            producto.setImagen(imagen);
+            modificado = true;
+        }
+
+        if (categoria != null && !producto.getCategoria().equals(categoria)) {
+            producto.setCategoria(categoria);
+            modificado = true;
+        }
+
+        if (precio >= 0 && producto.getPrecio() != precio) {
+            producto.setPrecio(precio);
+            modificado = true;
+        } else if (precio < 0) {
+            throw new IllegalArgumentException("El precio no puede ser negativo.");
+        }
+
+        if (descripcion != null && !producto.getDescripcion().equals(descripcion)) {
+            producto.setDescripcion(descripcion);
+            modificado = true;
+        }
+
+        if (cantidad >= 0 && producto.getCantidad() != cantidad) {
+            producto.setCantidad(cantidad);
+            modificado = true;
+        } else if (cantidad < 0) {
+            throw new IllegalArgumentException("La cantidad no puede ser negativa.");
+        }
+
+        return modificado;
     }
 
-    @Override
-    public void modificarProducto(String nombre, String codigo, String imagen, String categoria, double precio, String descripcion, EstadoProducto estado, List<Comentario> comentarios, List<MeGusta> meGustas, int cantidad, Date fechaPublicacion, Producto poducto) {
-
-    }
 
     @Override
-    public void eliminarProducto(Producto producto, Vendedor vendedor) {
+    public void eliminarProducto(String codigo, Vendedor vendedor) {
+        try{
+            Producto producto = buscarProducto(codigo);
+            vendedor.getProductos().removeIf(p -> p.getCodigo().equals(codigo));
+            listaProductosSistemaPublicados.removeIf(p -> p.getCodigo().equals(codigo));
+            listaProductosSistemaCancelados.removeIf(p -> p.getCodigo().equals(codigo));
+
+        }catch (ProductoNoDisponibleException e){
+
+        }
 
     }
 
     @Override
     public void calificarVendedor(String comentario, int calificacion, Vendedor calificado, Vendedor calificador) {
+
+    }
+
+    @Override
+    public Comentario crearComentario(String mensaje, Date fecha, Persona autor, Producto producto) throws ArgumentosFaltantesException {
+        if(mensaje != null && !mensaje.isEmpty() && !mensaje.equals("") && !mensaje.equals("null") && fecha != null && autor != null && producto != null){
+            return new Comentario(mensaje, fecha, autor, producto);
+        }else{
+            throw new ArgumentosFaltantesException("Faltaron argumentos para generar el comentario");
+        }
 
     }
 }
