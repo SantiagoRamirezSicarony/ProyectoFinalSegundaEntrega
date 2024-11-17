@@ -19,7 +19,6 @@ public class Main {
    //     Producto producto = marketPlace.crearProducto("ProductoPrueba","1234","Imagen","Cereales",1000,"Un producto de prueba",1,vendedor1);
 
         //marketPlace.comprarProducto(producto,1);
-
             Server server = new Server(8082);
             server.run();
 
