@@ -7,33 +7,35 @@ public class EstadisticaProducto implements Serializable {
 
     private double calificacionProducto;
     private int meGustas;
-    public EstadisticaProducto() {}
-    // Constructor con builder
-    private EstadisticaProducto(EstadisticaProductoBuilder builder) {
-        this.calificacionProducto = builder.calificacionProducto;
-        this.meGustas = builder.meGustas;
+
+    // Constructor vacío
+    public EstadisticaProducto() {
     }
 
-    // Builder
-    public static class EstadisticaProductoBuilder {
-        private double calificacionProducto;
-        private int meGustas;
-
-        public EstadisticaProductoBuilder setCalificacionProducto(double calificacionProducto) {
-            this.calificacionProducto = calificacionProducto;
-            return this;
-        }
-
-        public EstadisticaProductoBuilder setMeGustas(int meGustas) {
-            this.meGustas = meGustas;
-            return this;
-        }
-
-        public EstadisticaProducto build() {
-            return new EstadisticaProducto(this);
-        }
+    // Constructor completo
+    public EstadisticaProducto(double calificacionProducto, int meGustas) {
+        this.calificacionProducto = calificacionProducto;
+        this.meGustas = meGustas;
     }
 
+    // Getters y Setters
+    public double getCalificacionProducto() {
+        return calificacionProducto;
+    }
+
+    public void setCalificacionProducto(double calificacionProducto) {
+        this.calificacionProducto = calificacionProducto;
+    }
+
+    public int getMeGustas() {
+        return meGustas;
+    }
+
+    public void setMeGustas(int meGustas) {
+        this.meGustas = meGustas;
+    }
+
+    // Método toString
     @Override
     public String toString() {
         return "EstadisticaProducto{" +
@@ -41,4 +43,25 @@ public class EstadisticaProducto implements Serializable {
                 ", meGustas=" + meGustas +
                 '}';
     }
+
+    // Builder
+    public static class Builder {
+        private double calificacionProducto;
+        private int meGustas;
+
+        public Builder setCalificacionProducto(double calificacionProducto) {
+            this.calificacionProducto = calificacionProducto;
+            return this;
+        }
+
+        public Builder setMeGustas(int meGustas) {
+            this.meGustas = meGustas;
+            return this;
+        }
+
+        public EstadisticaProducto build() {
+            return new EstadisticaProducto(calificacionProducto, meGustas);
+        }
+    }
 }
+

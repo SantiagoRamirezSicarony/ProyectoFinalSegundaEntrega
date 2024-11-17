@@ -1,15 +1,17 @@
 package servidor.proyectofinalservidor.App;
 
 import servidor.proyectofinalservidor.Modelos.*;
+import servidor.proyectofinalservidor.Server.Server;
 import servidor.proyectofinalservidor.Utilidades.Persistencia;
 
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        MarketPlace marketPlace = new MarketPlace();
         try {
-        //    Vendedor vendedor = marketPlace.crearVendedor("Felipe",null,null,null,null);
+           // MarketPlace marketPlace = new MarketPlace();
+
+            //    Vendedor vendedor = marketPlace.crearVendedor("Felipe",null,null,null,null);
        //Vendedor vendedor1 = marketPlace.crearVendedor("Felipe","123","Ramirez","sant","456789");
        //    Vendedor vendedor2 =marketPlace.crearVendedor("Santiago","123","Ramirez","sant","456789");
        // Administrador administrador = marketPlace.crearAdministrador("Juan PABLO","123","Ramirez","sant","456789");
@@ -18,7 +20,8 @@ public class Main {
 
         //marketPlace.comprarProducto(producto,1);
 
-
+            Server server = new Server(8082);
+            server.run();
 
         } catch (Exception e) {
             Persistencia.guardaRegistroLog(e.getMessage(),1,"Prueba");

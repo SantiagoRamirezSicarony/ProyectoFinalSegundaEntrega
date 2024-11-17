@@ -2,13 +2,11 @@ package servidor.proyectofinalservidor.Modelos;
 
 
 
-import servidor.proyectofinalservidor.Excepciones.ProductoSinDescripcionException;
-import servidor.proyectofinalservidor.Excepciones.ProductoSinPrecioException;
+import servidor.proyectofinalservidor.Modelos.Enum.EstadoProducto;
 
 import java.io.Serializable;
 import java.util.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,7 @@ public class Producto implements Serializable {
 
     private String nombre;
     private String codigo;
-    private String imagen;
+    private byte[] imagen;
     private String categoria;
     private double precio;
     private String descripcion;
@@ -34,7 +32,7 @@ public class Producto implements Serializable {
     }
 
     // Constructor con todos los atributos
-    public Producto(String nombre, String codigo, String imagen, String categoria, double precio,
+    public Producto(String nombre, String codigo, byte[] imagen, String categoria, double precio,
                     String descripcion, EstadoProducto estado, List<Comentario> comentarios,
                     List<MeGusta> meGustas, int cantidad, Date fechaPublicacion) {
         this.nombre = nombre;
@@ -59,7 +57,7 @@ public class Producto implements Serializable {
         return codigo;
     }
 
-    public String getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 
@@ -103,7 +101,7 @@ public class Producto implements Serializable {
         this.codigo = codigo;
     }
 
-    public void setImagen(String imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 
@@ -159,7 +157,7 @@ public class Producto implements Serializable {
     public static class Builder {
         private String nombre;
         private String codigo;
-        private String imagen;
+        private byte[] imagen;
         private String categoria;
         private double precio;
         private String descripcion;
@@ -184,7 +182,7 @@ public class Producto implements Serializable {
             return this;
         }
 
-        public Builder setImagen(String imagen) {
+        public Builder setImagen(byte[] imagen) {
             this.imagen = imagen;
             return this;
         }
@@ -226,20 +224,6 @@ public class Producto implements Serializable {
 
         public Producto build() {
             return new Producto(nombre, codigo, imagen, categoria, precio, descripcion, estado, comentarios, meGustas, cantidad, fechaPublicacion);
-        }
-    }
-    //Excepcion 6
-    public void validarDescripcion() throws ProductoSinDescripcionException {
-        if (this.descripcion == null || this.descripcion.trim().isEmpty()) {
-            throw new ProductoSinDescripcionException("El producto debe tener una descripción.");
-        }
-    }
-
-    //Excepcion 10
-
-    public void verificarPrecio() throws ProductoSinPrecioException {
-        if (this.precio <= 0) {
-            throw new ProductoSinPrecioException("El producto " + this.nombre + " no tiene un precio válido.");
         }
     }
 

@@ -195,15 +195,14 @@ public class Persistencia {
     }
 
 
+    public static void guardarListaProductosXML(ArrayList<Producto> todosLosProductos) throws IOException {
+        properties.load(new FileInputStream(new File("src/main/resources/Properties/Rutas.properties")));
+        salvarRecursoSerializadoXML(properties.getProperty(Constantes.productosXML), todosLosProductos);
+    }
 
+    public static ArrayList<Producto> cargarTodosLosProductos() throws IOException {
+        properties.load(new FileInputStream(new File("src/main/resources/Properties/Rutas.properties")));
 
-
-
-
-
-
-
-
-
-
+        return (ArrayList<Producto>) cargarRecursoSerializadoXML(properties.getProperty(Constantes.productosXML));
+    }
 }

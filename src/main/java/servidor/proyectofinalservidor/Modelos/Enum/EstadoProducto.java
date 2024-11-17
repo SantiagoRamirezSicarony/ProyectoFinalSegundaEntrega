@@ -1,4 +1,4 @@
-package servidor.proyectofinalservidor.Modelos;
+package servidor.proyectofinalservidor.Modelos.Enum;
 
 public enum EstadoProducto {
     VENDIDO,

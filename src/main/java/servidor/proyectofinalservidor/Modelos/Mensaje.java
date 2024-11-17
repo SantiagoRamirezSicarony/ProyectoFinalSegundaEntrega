@@ -2,120 +2,114 @@ package servidor.proyectofinalservidor.Modelos;
 
 import java.io.Serializable;
 import java.util.Date;
-
 public class Mensaje implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String contenidoTexto;
-    private String contenidoImagen;
+    private byte[] contenidoImagen;
     private Date fecha;
     private Vendedor remitente;
     private Vendedor receptor;
-    public Mensaje() {}
-    // Constructor con builder
-    private Mensaje(MensajeBuilder builder) {
-        this.contenidoTexto = builder.contenidoTexto;
-        this.contenidoImagen = builder.contenidoImagen;
-        this.fecha = builder.fecha;
-        this.remitente = builder.remitente;
-        this.receptor = builder.receptor;
+
+    // Constructor completo
+    public Mensaje(String contenidoTexto, byte[] contenidoImagen, Date fecha, Vendedor remitente, Vendedor receptor) {
+        this.contenidoTexto = contenidoTexto;
+        this.contenidoImagen = contenidoImagen;
+        this.fecha = fecha;
+        this.remitente = remitente;
+        this.receptor = receptor;
     }
 
-    
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
+    // Getters
     public String getContenidoTexto() {
         return contenidoTexto;
     }
 
-    public void setContenidoTexto(String contenidoTexto) {
-        this.contenidoTexto = contenidoTexto;
-    }
-
-    public String getContenidoImagen() {
+    public byte[] getContenidoImagen() {
         return contenidoImagen;
-    }
-
-    public void setContenidoImagen(String contenidoImagen) {
-        this.contenidoImagen = contenidoImagen;
     }
 
     public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
     public Vendedor getRemitente() {
         return remitente;
-    }
-
-    public void setRemitente(Vendedor remitente) {
-        this.remitente = remitente;
     }
 
     public Vendedor getReceptor() {
         return receptor;
     }
 
+    // Setters
+    public void setContenidoTexto(String contenidoTexto) {
+        this.contenidoTexto = contenidoTexto;
+    }
+
+    public void setContenidoImagen(byte[] contenidoImagen) {
+        this.contenidoImagen = contenidoImagen;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setRemitente(Vendedor remitente) {
+        this.remitente = remitente;
+    }
+
     public void setReceptor(Vendedor receptor) {
         this.receptor = receptor;
     }
 
-
+    // toString
+    @Override
+    public String toString() {
+        return "Mensaje{" +
+                "contenidoTexto='" + contenidoTexto + '\'' +
+                ", contenidoImagen=" + (contenidoImagen != null ? "Image Data" : "No Image") +
+                ", fecha=" + fecha +
+                ", remitente=" + remitente +
+                ", receptor=" + receptor +
+                '}';
+    }
 
     // Builder
-    public static class MensajeBuilder {
+    public static class Builder {
         private String contenidoTexto;
-        private String contenidoImagen;
+        private byte[] contenidoImagen;
         private Date fecha;
         private Vendedor remitente;
         private Vendedor receptor;
 
-        public MensajeBuilder setContenidoTexto(String contenidoTexto) {
+        public Builder setContenidoTexto(String contenidoTexto) {
             this.contenidoTexto = contenidoTexto;
             return this;
         }
 
-        public MensajeBuilder setContenidoImagen(String contenidoImagen) {
+        public Builder setContenidoImagen(byte[] contenidoImagen) {
             this.contenidoImagen = contenidoImagen;
             return this;
         }
 
-        public MensajeBuilder setFecha(Date fecha) {
+        public Builder setFecha(Date fecha) {
             this.fecha = fecha;
             return this;
         }
 
-        public MensajeBuilder setRemitente(Vendedor remitente) {
+        public Builder setRemitente(Vendedor remitente) {
             this.remitente = remitente;
             return this;
         }
 
-        public MensajeBuilder setReceptor(Vendedor receptor) {
+        public Builder setReceptor(Vendedor receptor) {
             this.receptor = receptor;
             return this;
         }
 
         public Mensaje build() {
-            return new Mensaje(this);
+            return new Mensaje(contenidoTexto, contenidoImagen, fecha, remitente, receptor);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Mensaje{" +
-                "contenidoTexto='" + contenidoTexto + '\'' +
-                ", contenidoImagen='" + contenidoImagen + '\'' +
-                ", fecha=" + fecha +
-                ", remitente=" + remitente +
-                ", receptor=" + receptor +
-                '}';
     }
 }
 

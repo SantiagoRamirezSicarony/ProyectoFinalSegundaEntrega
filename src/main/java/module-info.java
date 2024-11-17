@@ -11,7 +11,7 @@ module servidor.proyectofinalservidor {
     exports servidor.proyectofinalservidor.Excepciones;
     exports servidor.proyectofinalservidor.Servicios;
     exports servidor.proyectofinalservidor.Utilidades;
-
+    exports servidor.proyectofinalservidor.Modelos.Enum;
 
 
 }

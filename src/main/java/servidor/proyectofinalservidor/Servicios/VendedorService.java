@@ -12,10 +12,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public interface VendedorService {
-    public Vendedor crearVendedor(String nombre,String cedula, String apellido,String correo, String contrasenia,String direccion) throws Exception;
-    public void agregarContacto(Vendedor inicial, Vendedor contacto) throws MaximoContactosException, ContactoEncontradoException, ArgumentosFaltantesException;
-    public void comentarProducto(String mensaje, Date fecha, Persona autor, Producto producto) throws ArgumentosFaltantesException, ProductoNoDisponibleException;
-    public void darMeGusta(Date fecha, Vendedor autor, Producto producto) throws ArgumentosFaltantesException;
-    public ArrayList<Vendedor> buscarVendedor(String cedula, String nombre, String apellido)throws ArgumentosFaltantesException;
-
+    Vendedor crearVendedor(String nombre,String cedula, String apellido,String correo, String contrasenia,String direccion) throws Exception;
+    void agregarContacto(Vendedor inicial, Vendedor contacto) throws MaximoContactosException, ContactoEncontradoException, ArgumentosFaltantesException;
+    void comentarProducto(String mensaje, Date fecha, Persona autor, Producto producto) throws ArgumentosFaltantesException, ProductoNoDisponibleException;
+    void darMeGusta(Date fecha, Vendedor autor, Producto producto) throws ArgumentosFaltantesException;
+    ArrayList<Vendedor> buscarVendedor(String cedula, String nombre, String apellido)throws ArgumentosFaltantesException;
+    boolean encontrarContactos(Vendedor inicial, Vendedor contacto);
+    void ennviarSolicitud(Vendedor solicitador, Vendedor enviarSolicitud) throws ArgumentosFaltantesException;
+    ArrayList<Vendedor> sugerirAmistades(Vendedor vendedorActual);
+    Persona buscarVendedorExacto(String correo) throws ArgumentosFaltantesException;
 }

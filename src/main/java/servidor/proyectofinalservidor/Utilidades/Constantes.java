@@ -12,5 +12,6 @@ public class Constantes {
     public static String productosXMLpublicados ="RUTA_PRODUCTOS_PUBLICADOSxml";
     public static String productosXMLcancelados ="RUTA_PRODUCTOS_CANCELADOSxml";
     public static String personasBin = "RUTA_PERSONASBin";
+    public static String productosXML = "RUTA_TodosProductoXML";
 
 }

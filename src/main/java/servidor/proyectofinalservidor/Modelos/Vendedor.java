@@ -6,10 +6,10 @@ import servidor.proyectofinalservidor.Excepciones.MaximoContactosException;
 import servidor.proyectofinalservidor.Excepciones.ProductoDuplicadoException;
 import servidor.proyectofinalservidor.Excepciones.ProductoNoDisponibleException;
 import servidor.proyectofinalservidor.Excepciones.VendedorNoEncontradoException;
+import servidor.proyectofinalservidor.Modelos.Enum.EstadoProducto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Vendedor extends Persona implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -23,10 +23,12 @@ public class Vendedor extends Persona implements Serializable {
     private ArrayList<Producto> productosComprados;
     private int reputacionVendedor;
     private ArrayList<Reputacion> calificaciones;
+    private ArrayList<Chat> chats ;
 
     // Constructor vacío
     public Vendedor() {
         super();
+        this.chats = new ArrayList<>();
         this.productos = new ArrayList<>();
         this.contactos = new ArrayList<>();
         this.solicitudes = new ArrayList<>();
@@ -37,9 +39,10 @@ public class Vendedor extends Persona implements Serializable {
     // Constructor con parámetros
     public Vendedor(String nombre, String apellido, String cedula, String contrasenia, String direccion,
                     String correo, ArrayList<Producto> productos, ArrayList<Vendedor> contactos,
-                    ArrayList<Vendedor> solicitudes, ArrayList<Producto> productosComprados, int reputacionVendedor, ArrayList<Reputacion> calificaciones) {
+                    ArrayList<Vendedor> solicitudes, ArrayList<Producto> productosComprados, int reputacionVendedor, ArrayList<Reputacion> calificaciones, ArrayList<Chat> chats) {
         super(nombre, cedula, apellido); // Llamar al constructor de Persona
         this.contrasenia = contrasenia;
+        this.chats = chats;
         this.reputacionVendedor = reputacionVendedor;
         this.direccion = direccion;
         this.correo = correo;
@@ -82,9 +85,27 @@ public class Vendedor extends Persona implements Serializable {
         return reputacionVendedor;
     }
 
+    public ArrayList<Reputacion> getCalificaciones() {
+        return calificaciones;
+    }
+
+
+
+    public ArrayList<Chat> getChats() {
+        return chats;
+    }
+
+
     // Setters
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+    public void setCalificaciones(ArrayList<Reputacion> calificaciones) {
+        this.calificaciones = calificaciones;
+    }
+
+    public void setChats(ArrayList<Chat> chats) {
+        this.chats = chats;
     }
 
     public void setReputacionVendedor(int reputacionVendedor) {
@@ -144,6 +165,7 @@ public class Vendedor extends Persona implements Serializable {
         private int reputacionVendedor;
         private ArrayList<Producto> productosComprados = new ArrayList<>();
         private ArrayList<Reputacion> calificaciones = new ArrayList<>();
+        private ArrayList<Chat> chats = new ArrayList<>();
 
 
         public Builder() {
@@ -212,10 +234,14 @@ public class Vendedor extends Persona implements Serializable {
             this.contactos = contactos;
             return this;
         }
+        public Builder setChats(ArrayList<Chat> chats) {
+            this.chats = chats;
+            return this;
+        }
 
         // Método build para crear un Vendedor
         public Vendedor build() {
-            return new Vendedor(nombre, apellido, cedula, contrasenia, direccion, correo, productos, contactos,solicitudes,productosComprados,reputacionVendedor, calificaciones);
+            return new Vendedor(nombre, apellido, cedula, contrasenia, direccion, correo, productos, contactos,solicitudes,productosComprados,reputacionVendedor, calificaciones, chats);
         }
     }
 

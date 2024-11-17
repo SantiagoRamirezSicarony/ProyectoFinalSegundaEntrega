@@ -17,6 +17,30 @@ public class MeGusta implements Serializable {
         this.producto = producto;
     }
 
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Vendedor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Vendedor autor) {
+        this.autor = autor;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
     // Builder
     public static class MeGustaBuilder {
         private Date fecha;

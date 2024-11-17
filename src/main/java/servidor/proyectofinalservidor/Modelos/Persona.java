@@ -87,20 +87,5 @@ public class Persona implements Serializable {
     }
 
 
-    //Excepcion 8 3l´+
-/*
-    public void autenticar(String password) throws AutenticacionFallidaException {
-        if (!this.password.equals(password)) {
-            throw new AutenticacionFallidaException("La autenticación ha fallado. Contraseña incorrecta.");
-        }
-        System.out.println("Autenticación exitosa.");
-    }
-    */
-
-
-
-
-
-
 }
 

@@ -41,13 +41,7 @@ public class EstadisticaVendedor implements Serializable {
         this.mensajesEnviados = mensajesEnviados;
     }
 
-    //Excepcion 9
-    public void verificarEstadisticas() throws EstadisticaNoDisponibleException {
-        if (this.productosVendidos == 0 && this.mensajesEnviados == 0) {
-            throw new EstadisticaNoDisponibleException("No hay estadísticas disponibles para este vendedor.");
-        }
-        System.out.println("Estadísticas disponibles.");
-    }
+
     
 
     // Constructor con builder
